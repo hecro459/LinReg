@@ -1,0 +1,10 @@
+Package: mynewrpackage
+Type: Package
+Title: Package for Advanced R - Lab 4
+Version: 1.0
+Date: 2018-08-28
+Author: Hector Rodriguez-Deniz
+Maintainer: Hector Rodriguez-Deniz <hector.rodriguez@liu.se>
+Description: In this package we will implement basic functionality
+for a linear regression model. 
+License: GPL (>= 2)
