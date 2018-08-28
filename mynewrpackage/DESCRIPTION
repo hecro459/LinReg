@@ -5,6 +5,6 @@ Version: 1.0
 Date: 2018-08-28
 Author: Hector Rodriguez-Deniz
 Maintainer: Hector Rodriguez-Deniz <hector.rodriguez@liu.se>
-Description: In this package we will implement basic functionality
-for a linear regression model. 
+Description: In this package we will implement basic functionality for a linear regression model. 
 License: GPL (>= 2)
+RoxygenNote: 6.0.1
