@@ -8,3 +8,5 @@ Maintainer: Hector Rodriguez-Deniz <hector.rodriguez@liu.se>
 Description: In this package we will implement basic functionality for a linear regression model. 
 License: GPL (>= 2)
 RoxygenNote: 6.0.1
+Imports: ggplot2, gridExtra
+Suggests: testthat
