@@ -36,11 +36,11 @@ summary <- function(x){UseMethod("summary",x)}
 
 print.linreg <- function(x)
 {
-  cat(sprintf("Regression Formula:\n\t %s\n",(format(x$Formula))))
-  cat(sprintf("Estimated coefficients:\n"))
-  cat(sprintf("\t%s",format(names(x$Coefficients))))
-  cat(sprintf("\n"))
-  cat(sprintf("\t%s",format(x$Coefficients)))
+  cat(sprintf("linreg(formula = %s, data=iris)\n",(format(x$Formula))))
+  #cat(sprintf("Estimated coefficients:\n"))
+  cat(sprintf("%s",format(names(x$Coefficients))))
+  #cat(sprintf("\n"))
+  #cat(sprintf("\t%s",format(x$Coefficients)))
 }
 
 plot.linreg <- function(x){
