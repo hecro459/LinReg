@@ -1,4 +1,15 @@
-#Main function
+#' Basic Linear Regression.
+#'
+#' \code{linreg} returns a S3 object of class linreg
+#'
+#' This function performs a basic linear regression model and return an object
+#' for which a number of methods are defined to analyze the regression results.
+#'
+#' @param formula A formula object contanining the model.
+#' @param data An input data frame
+#' @return An S3 object of class linreg 
+#'
+#' @seealso \url{https://en.wikipedia.org/wiki/Linear_regression}
 linreg <- function(data,formula){
   X <- model.matrix(formula,data)
   y <- data[,all.vars(formula)[1]]
@@ -99,10 +110,7 @@ summary.linreg <- function(x){
   cat(sprintf("Degrees of freedom: %d\n",x$df))
 }
 
-
-
 #TESTING THE METHODS
-
 #data(iris)
 #D = iris
 #f <- Petal.Length~Species
