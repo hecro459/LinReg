@@ -11,6 +11,7 @@
 #' @return An S3 object of class linreg 
 #'
 #' @seealso \url{https://en.wikipedia.org/wiki/Linear_regression}
+#' @import stats utils
 linreg <- function(data,formula){
   X <- model.matrix(formula,data)
   y <- data[,all.vars(formula)[1]]
