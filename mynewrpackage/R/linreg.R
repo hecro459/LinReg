@@ -119,7 +119,7 @@ print.linreg <- function(x)
 }
 
 #' @export
-#' @import ggplot2
+#' @import ggplot2 gridExtra
 plot.linreg <- function(x){
   yhat <- x$yhat
   ehat <- x$ehat
