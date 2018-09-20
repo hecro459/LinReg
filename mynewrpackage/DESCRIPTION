@@ -9,4 +9,7 @@ Description: In this package we will implement basic functionality for a linear 
 License: GPL (>= 2)
 RoxygenNote: 6.0.1
 Imports: ggplot2, gridExtra
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
