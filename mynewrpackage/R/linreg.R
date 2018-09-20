@@ -38,16 +38,6 @@ linreg <- function(data,formula){
 }
 
 
-#Now define the methods of the class
-print <- function(x){UseMethod("print",x)}
-plot <- function(x){UseMethod("plot",x)}
-resid <- function(x){UseMethod("resid",x)}
-pred <- function(x){UseMethod("pred",x)}
-coef <- function(x){UseMethod("coef",x)}
-summary <- function(x){UseMethod("summary",x)}
-
-
-
 #' Print coefficients.
 #'
 #' \code{print.linreg} Print the coefficients of a linear regression model
@@ -57,14 +47,77 @@ summary <- function(x){UseMethod("summary",x)}
 #'
 #' @export
 #' @param x An object of class linreg contanining a linear regression.
-#' @return An S3 object of class linreg 
+print <- function(x){UseMethod("print",x)}
+
+#' Residual plots.
 #'
+#' \code{plot.linreg} Generate residual plots of a linear regression model
+#'
+#' This function generate residual plots of a linear regression stored in an
+#' S3 object of class linreg.
+#'
+#' @export
+#' @param x An object of class linreg contanining a linear regression.
+plot <- function(x){UseMethod("plot",x)}
+
+#' Residuals
+#'
+#' \code{plot.linreg} Return vector of residuals from a linear regression model
+#'
+#' This function returns a vector of residuals from a linear regression stored in 
+#' an S3 object of class linreg.
+#'
+#' @export
+#' @param x An object of class linreg contanining a linear regression.
+#' @return A numeric vector of residuals 
+resid <- function(x){UseMethod("resid",x)}
+
+#' Fitted values
+#'
+#' \code{plot.linreg} Return fitted values from a linear regression model
+#'
+#' This function returns the fitted values of a linear regression stored in 
+#' an S3 object of class linreg.
+#'
+#' @export
+#' @param x An object of class linreg contanining a linear regression.
+#' @return A numeric vector of fitted values
+pred <- function(x){UseMethod("pred",x)}
+
+#' Regression coefficients
+#'
+#' \code{plot.linreg} Return estimated coefficients from a linear regression model
+#'
+#' This function returns estimated coefficients of a linear regression stored in 
+#' an S3 object of class linreg.
+#'
+#' @export
+#' @param x An object of class linreg contanining a linear regression.
+#' @return A numeric vector with the estimated coefficients
+coef <- function(x){UseMethod("coef",x)}
+
+#' Regression summary
+#'
+#' \code{plot.linreg} Displays summary information of a fitted linear regression model
+#'
+#' This function displays the estimated coefficients and associated t-values and p-values
+#' of a linear regression stored in an S3 object of class linreg. Also the estimated error
+#' variance of the model and the degrees of freedom are shown.
+#'
+#' @export
+#' @param x An object of class linreg contanining a linear regression.
+summary <- function(x){UseMethod("summary",x)}
+
+
+
+#' @export
 print.linreg <- function(x)
 {
   cat(sprintf("linreg(formula = %s, data=iris)\n",(format(x$Formula))))
   cat(sprintf("%s",format(names(x$Coefficients))))
 }
 
+#' @export
 plot.linreg <- function(x){
   yhat <- x$yhat
   ehat <- x$ehat
@@ -92,18 +145,22 @@ plot.linreg <- function(x){
   grid.arrange(p1, p2, ncol=2)
 }
 
+#' @export
 resid.linreg <- function(x){
   return(x$ehat)
 }
 
+#' @export
 pred.linreg <- function(x){
   return(x$yhat)
 }
 
+#' @export
 coef.linreg <- function(x){
   return(x$Coefficients)
 }
 
+#' @export
 summary.linreg <- function(x){
   n <- length(x$Coefficients)
   coeff <- x$Coefficients
