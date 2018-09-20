@@ -5,6 +5,7 @@
 #' This function performs a basic linear regression model and return an object
 #' for which a number of methods are defined to analyze the regression results.
 #'
+#' @export
 #' @param formula A formula object contanining the model.
 #' @param data An input data frame
 #' @return An S3 object of class linreg 
@@ -45,13 +46,23 @@ pred <- function(x){UseMethod("pred",x)}
 coef <- function(x){UseMethod("coef",x)}
 summary <- function(x){UseMethod("summary",x)}
 
+
+
+#' Print coefficients.
+#'
+#' \code{print.linreg} Print the coefficients of a linear regression model
+#'
+#' This function print the coefficients of a linear regression stored in an
+#' object of class linreg.
+#'
+#' @export
+#' @param x An object of class linreg contanining a linear regression.
+#' @return An S3 object of class linreg 
+#'
 print.linreg <- function(x)
 {
   cat(sprintf("linreg(formula = %s, data=iris)\n",(format(x$Formula))))
-  #cat(sprintf("Estimated coefficients:\n"))
   cat(sprintf("%s",format(names(x$Coefficients))))
-  #cat(sprintf("\n"))
-  #cat(sprintf("\t%s",format(x$Coefficients)))
 }
 
 plot.linreg <- function(x){
