@@ -119,6 +119,7 @@ print.linreg <- function(x)
 }
 
 #' @export
+#' @import ggplot2
 plot.linreg <- function(x){
   yhat <- x$yhat
   ehat <- x$ehat
