@@ -119,19 +119,25 @@ print.linreg <- function(x)
 }
 
 #' @export
-#' @import ggplot2 gridExtra
+#' @import ggplot2 gridExtra 
 plot.linreg <- function(x){
   yhat <- x$yhat
   ehat <- x$ehat
   f <- x$Formula
   outliers <- tail(order(abs(ehat)),3)
   stand_ehat <- sqrt(abs((ehat-mean(ehat))/sd(ehat)))
+  
+  #Liu_theme
+  #LiUtheme <- theme_classic() +  theme(plot.title = element_text(hjust = 0.5)) +
+   # theme(panel.background = element_rect(fill = "lightblue",colour = "lightblue",size = 0.5, linetype = "solid"))
+  
   p1 <- ggplot(data=NULL,aes(x = yhat, y = ehat)) + 
     geom_point() + 
     geom_smooth(method = "glm", se = FALSE, color = "red") +
     labs(title="Residuals vs Fitted",x=sprintf("Fitted_values\n %s",as.character(c(f))),y="Residuals") +
     geom_text(label = outliers,aes(x=yhat[outliers]-0.1,y=ehat[outliers])) + 
-    theme_classic() + 
+    #LiUtheme
+    theme_classic() +
     theme(plot.title = element_text(hjust = 0.5)) 
   
   #Standardized residuals 
@@ -142,6 +148,7 @@ plot.linreg <- function(x){
     geom_smooth(method = "glm", se = FALSE, color = "red") +
     labs(title="Scale-Location",x=sprintf("Fitted_values\n %s",as.character(c(f))),y=expression(sqrt(abs("Standardized Residuals")))) +
     geom_text(label = outliers,aes(x=yhat[outliers]-0.1,y=stand_ehat[outliers])) + 
+    #+ LiUtheme
     theme_classic() + 
     theme(plot.title = element_text(hjust = 0.5)) 
   grid.arrange(p1, p2, ncol=2)
