@@ -1,2 +1,2 @@
-# advR_lab4
-Lab 4 - Advanced R programming
+# Simple Linear Regression Package
+Linear Regression
