@@ -20,4 +20,4 @@ lreg <- linreg(D,f)
 summary(lreg)
 plot(resid(lreg))
 ```
-![](/resplot.png)
+<img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png" width="100">
