@@ -198,6 +198,7 @@ summary.linreg <- function(x){
 #pred(lreg)
 #coef(lreg)
 #summary(lreg)
+#dummycomment
 
 
 
