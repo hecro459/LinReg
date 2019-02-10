@@ -20,3 +20,4 @@ lreg <- linreg(D,f)
 summary(lreg)
 plot(resid(lreg))
 ```
+![resplot](/resplot.png)
