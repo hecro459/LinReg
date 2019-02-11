@@ -25,14 +25,10 @@ plot(pred(lreg))
 <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png" width="400">
 
 
-<div class="row">
-  <div class="column">
+<p float="left">
    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png" width="100">
-  </div>
-  <div class="column">
     <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png" width="100">
-  </div>
-</div> 
+</p> 
 
 
 
