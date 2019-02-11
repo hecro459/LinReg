@@ -3,12 +3,12 @@
 
 R package with a simple implementation of Linear Regression using S3 classes.
 The following functions are available:
-* **linreg**  Fits a linear regression model and creates an lreg object
-* **print**   Prints out the regression formula
-* **coef**    Returns the 
-* **resid**   Returns residuals
-* **pred**    Returns fitted values
-* **plot**    Plot regression fit
+* **linreg ** Fits a linear regression model and creates an lreg object
+* **print  ** Prints out the regression formula
+* **coef   ** Returns the 
+* **resid  ** Returns residuals
+* **pred   ** Returns fitted values
+* **plot   ** Plot regression fit
 * **summary** Prints out summary of regression
 
 ## Example
