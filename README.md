@@ -23,3 +23,16 @@ plot(pred(lreg))
 ```
 <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png" width="400">
 <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png" width="400">
+
+
+<div class="row">
+  <div class="column">
+   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png" width="400">
+  </div>
+  <div class="column">
+    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png" width="400">
+  </div>
+</div> 
+
+
+
