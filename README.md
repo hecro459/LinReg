@@ -21,9 +21,9 @@ summary(lreg)
 plot(resid(lreg))
 plot(pred(lreg))
 ```
-<p float="left">
-   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png" width="300">
-    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png" width="300">
+<p align="center">
+   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png" width="400">
+    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png" width="400">
 </p> 
 
 
