@@ -18,12 +18,12 @@ The following functions are available:
 4. Go to: *File* -> *New Project* -> *Version Control* -> *Git*
 5. Introduce the link to the Github repo and setup local folders (see figure below). Click ok. If everything went smooth the repo was cloned and the new project is automatically loaded.
 
-<p align="center">
+<p align="left">
    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/setup01.png" width="400">
 
 6. Go to: *Build* -> *Configure build tools* and  enter the information as shown in the figure below. Check all Roxygen options inside *Configure*. Click ok.
 
-<p align="center">
+<p align="left">
    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/setup02.png" width="400">
    
 7. Now run: *Build* -> *Clean and Rebuild*. The package should be built and loaded. Now you can access the functions from the package. 
