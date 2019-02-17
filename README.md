@@ -11,6 +11,21 @@ The following functions are available:
 * **plot**:    Plot simple regression diagnosis
 * **summary**: Prints out summary of regression including p-values
 
+## Setup
+1. Download and install R from <http://www.r-project.org>
+2. Download and install RStudio from <http://www.rstudio.com>
+3. Run RStudio
+4. Go to: *File* -> *New Project* -> *Version Control* -> *Git*
+5. Introduce the link to the Github repo and setup local folders (see figure below). Click ok. If everything went smooth the repo was cloned and the new project is automatically loaded.
+
+<p align="center">
+   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/setup01.png" width="400">
+
+6. Go to: *Build* -> *Configure build tools* and  Enter the information as shown in the figure below. Check all Roxygen options inside *Configure*. Click ok.
+<p align="center">
+   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/setup02.png" width="400">
+7. Now run: *Build* -> *Clean and Rebuild*. The package should be built and loaded. Now you can run the simple example shown below. 
+
 ## Example
 ```r
 data(iris)
