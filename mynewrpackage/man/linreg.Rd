@@ -4,12 +4,14 @@
 \alias{linreg}
 \title{Basic Linear Regression.}
 \usage{
-linreg(data, formula)
+linreg(data, formula, type)
 }
 \arguments{
 \item{data}{An input data frame}
 
 \item{formula}{A formula object contanining the model.}
+
+\item{type}{An integer defining the regression type: 0=OLS, 1=Bayesian.}
 }
 \value{
 An S3 object of class linreg
