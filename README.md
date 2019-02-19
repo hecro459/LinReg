@@ -40,8 +40,8 @@ lines(pred(lreg),col=2)
 plot(resid(lreg))
 ```
 <p align="center">
-    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png" height="400",width="300">
-   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png" height="400",width="300>
+    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png", width="400">
+   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png", width="400">
 </p> 
 
 
