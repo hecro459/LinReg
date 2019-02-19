@@ -8,26 +8,45 @@
 #' @export
 #' @param formula A formula object contanining the model.
 #' @param data An input data frame
+#' @param type Regression type. 0 = Ordinary Least Squares, 1 = Bayesian with non-informative prior
 #' @return An S3 object of class linreg 
 #'
 #' @seealso \url{https://en.wikipedia.org/wiki/Linear_regression}
 #' @import stats utils
-linreg <- function(data,formula){
+linreg <- function(data,formula,type){
   X <- model.matrix(formula,data)
   y <- data[,all.vars(formula)[1]]
-  Bhat <- solve(t(X)%*%X)%*%t(X)%*%y
-  yhat <- X%*%Bhat
-  #plot(y~X[,2])
-  #lines(yhat~X[,2],col=2)
-  ehat <- y-yhat
-  df <- nrow(X)-nrow(Bhat)
-  evar <- (t(ehat)%*%ehat)/df
-  Bvar <- c(evar)*diag(solve(t(X)%*%X))
-  tvalues <- Bhat/sqrt(Bvar)
-  pvalues <- numeric(length(tvalues))
-  for (i in 1:length(pvalues)){
-    if (tvalues[i]<0) pvalues[i] <- 2*pt(tvalues[i],df)
-    else pvalues[i] <- pvalues[i] <- 2*pt(-tvalues[i],df)
+  n <- length(y)
+  m <- ncol(X)
+  
+  if(type==1){
+    Bhat <- solve(t(X)%*%X)%*%t(X)%*%y
+    yhat <- X%*%Bhat
+    #plot(y~X[,2])
+    #lines(yhat~X[,2],col=2)
+    ehat <- y-yhat
+    df <- nrow(X)-nrow(Bhat)
+    evar <- (t(ehat)%*%ehat)/df
+    Bvar <- c(evar)*diag(solve(t(X)%*%X))
+    tvalues <- Bhat/sqrt(Bvar)
+    pvalues <- numeric(length(tvalues))
+    for (i in 1:length(pvalues)){
+      if (tvalues[i]<0) pvalues[i] <- 2*pt(tvalues[i],df)
+      else pvalues[i] <- pvalues[i] <- 2*pt(-tvalues[i],df)
+    }
+  }
+  else{
+    #no prior for sigma so we approximate it from data
+    sigma2 <- ((max(y)-min(y))/4)**2
+    #non-informative prior
+    mu0 <- numeric(m)
+    Sigma0 <- diag(m)*1000
+    #calculation of posterior distribution
+    SigmaStar <- sigma2*solve(sigma2*solve(Sigma0)+t(X)%*%X)
+    muStar <- SigmaStar%*%solve(Sigma0)%*%mu0+1/sigma2*(SigmaStar%*%t(X)%*%y)
+    #take 1000 samples from posterior and get betas 
+    Bsample <- mvrnorm(10000,muStar,SigmaStar)
+    Bhat <- apply(Bsample,2,mean)
   }
   #Prepare data for class output
   coeff <- c(Bhat)
@@ -38,6 +57,7 @@ linreg <- function(data,formula){
   return(reg)
 }
 
+#Definition of generic functions 
 
 #' Print coefficients.
 #'
@@ -109,7 +129,7 @@ coef <- function(x){UseMethod("coef",x)}
 #' @param x An object of class linreg contanining a linear regression.
 summary <- function(x){UseMethod("summary",x)}
 
-
+#Definition of methods
 
 #' @export
 print.linreg <- function(x)
@@ -187,18 +207,7 @@ summary.linreg <- function(x){
   cat(sprintf("Degrees of freedom: %d\n",x$df))
 }
 
-#TESTING THE METHODS
-#data(iris)
-#D = iris
-#f <- Petal.Length~Species
-#lreg <- linreg(D,f) #Creates an S3 object
-#print(lreg) #Print out regression formula and coefficients
-#plot(lreg) #Print residual plots
-#resid(lreg) #Print residual plots
-#pred(lreg)
-#coef(lreg)
-#summary(lreg)
-#dummycomment
+
 
 
 
