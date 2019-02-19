@@ -1,14 +1,14 @@
 Package: mynewrpackage
 Type: Package
-Title: Package for Advanced R - Lab 4
+Title: Linear Regression
 Version: 1.0
-Date: 2018-08-28
+Date: 2019-02-20
 Author: Hector Rodriguez-Deniz
 Maintainer: Hector Rodriguez-Deniz <hector.rodriguez@liu.se>
 Description: In this package we will implement basic functionality for a linear regression model. 
 License: GPL (>= 2)
 RoxygenNote: 6.0.1
-Imports: ggplot2, gridExtra
+Imports: ggplot2, gridExtra, MASS
 Suggests: testthat,
     knitr,
     rmarkdown
