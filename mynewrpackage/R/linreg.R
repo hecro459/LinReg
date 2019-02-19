@@ -8,18 +8,19 @@
 #' @export
 #' @param formula A formula object contanining the model.
 #' @param data An input data frame
-#' @param type Regression type. 0 = Ordinary Least Squares, 1 = Bayesian with non-informative prior
+#' @param type An integer defining the regression type: 0=OLS, 1=Bayesian.
 #' @return An S3 object of class linreg 
 #'
 #' @seealso \url{https://en.wikipedia.org/wiki/Linear_regression}
-#' @import stats utils
+#' @import stats utils MASS
 linreg <- function(data,formula,type){
   X <- model.matrix(formula,data)
   y <- data[,all.vars(formula)[1]]
   n <- length(y)
   m <- ncol(X)
   
-  if(type==1){
+  if(type==0){
+    rtype="freq"
     Bhat <- solve(t(X)%*%X)%*%t(X)%*%y
     yhat <- X%*%Bhat
     #plot(y~X[,2])
@@ -36,6 +37,7 @@ linreg <- function(data,formula,type){
     }
   }
   else{
+    rtype="bayes"
     #no prior for sigma so we approximate it from data
     sigma2 <- ((max(y)-min(y))/4)**2
     #non-informative prior
@@ -46,13 +48,20 @@ linreg <- function(data,formula,type){
     muStar <- SigmaStar%*%solve(Sigma0)%*%mu0+1/sigma2*(SigmaStar%*%t(X)%*%y)
     #take 1000 samples from posterior and get betas 
     Bsample <- mvrnorm(10000,muStar,SigmaStar)
-    Bhat <- apply(Bsample,2,mean)
+    Bhat <- as.matrix(apply(Bsample,2,mean))
+    yhat <- X%*%Bhat
+    ehat <- y-yhat
+    df <- nrow(X)-nrow(Bhat)#Does it make sense in Bayesian?
+    evar <- sigma2
+    Bvar <- as.matrix(apply(Bsample,2,var))
+    tvalues <- numeric(m)#No t-values
+    pvalues <- numeric(m)#or p-values in Bayesian!
   }
   #Prepare data for class output
   coeff <- c(Bhat)
   names(coeff) <- rownames(Bhat)
-  reg <- list(formula,coeff,yhat,ehat,Bvar,tvalues,pvalues,df)
-  names(reg) <- c("Formula","Coefficients","yhat","ehat","Bvar","tvalues","pvalues","df")
+  reg <- list(formula,coeff,yhat,ehat,Bvar,tvalues,pvalues,df,rtype)
+  names(reg) <- c("Formula","Coefficients","yhat","ehat","Bvar","tvalues","pvalues","df","rtype")
   class(reg) <- "linreg" 
   return(reg)
 }
