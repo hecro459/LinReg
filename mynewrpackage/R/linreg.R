@@ -47,8 +47,9 @@ linreg <- function(data,formula,type){
     #calculation of posterior distribution
     SigmaStar <- sigma2*solve(sigma2*solve(Sigma0)+t(X)%*%X)
     muStar <- SigmaStar%*%solve(Sigma0)%*%mu0+1/sigma2*(SigmaStar%*%t(X)%*%y)
-    #take 1000 samples from posterior and get betas 
-    Bsample <- mvrnorm(10000,muStar,SigmaStar)
+    #take N samples from posterior and get betas 
+    N_posterior_samples <- 10000
+    Bsample <- mvrnorm(N_posterior_samples,muStar,SigmaStar)
     Bhat <- as.matrix(apply(Bsample,2,mean))
     yhat <- X%*%Bhat
     ehat <- y-yhat
