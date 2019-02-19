@@ -200,20 +200,23 @@ coef.linreg <- function(x){
 
 #' @export
 summary.linreg <- function(x){
+  printSummary <- function(coeff,Bvar,tvalues,pvalues,n){
+    cat(sprintf("Coefficients\t\tSdError\t\tTvalue\t\tPvalue\n"))
+    cat(sprintf("--------------------------------------------------------------\n"))
+    for (i in 1:n){
+      cat(sprintf("%-15s\t\t%6.6f\t%6.6f\t%6.6f\n",strtrim(names(coeff[i]),15),Bvar[i],tvalues[i],pvalues[i]))
+    }
+    cat(sprintf("--------------------------------------------------------------\n"))
+    cat(sprintf("Estimated error variance: %f\n",var(x$ehat)))
+    cat(sprintf("Degrees of freedom: %d\n",x$df))
+  }
+  
   n <- length(x$Coefficients)
   coeff <- x$Coefficients
   Bvar <- x$Bvar
   T <- x$tvalues
   P <- x$pvalues
-  
-  cat(sprintf("Coefficients\t\tSdError\t\tTvalue\t\tPvalue\n"))
-  cat(sprintf("--------------------------------------------------------------\n"))
-  for (i in 1:n){
-    cat(sprintf("%s\t\t%f\t%f\t%f\n",strtrim(names(coeff[i]),15),Bvar[i],T[i],P[i]))
-  }
-  cat(sprintf("--------------------------------------------------------------\n"))
-  cat(sprintf("Estimated error variance: %f\n",var(x$ehat)))
-  cat(sprintf("Degrees of freedom: %d\n",x$df))
+  printSummary(coeff,Bvar,T,P,n)
 }
 
 
