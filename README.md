@@ -1,7 +1,7 @@
 # Simple Linear Regression Package
 [![Build Status](https://travis-ci.org/hecro459/LinReg.svg?branch=master)](https://travis-ci.org/hecro459/LinReg)
 
-R package with a simple implementation of Linear Regression using S3 classes. Both Ordinary Least-Squares and Bayesian estimation. 
+R package with a simple implementation of Linear Regression using S3 classes. Ordinary Least-Squares and Bayesian estimation with non-informative prior are supported. 
 
 The following functions are available:
 * **linreg**:  Fits a linear regression model and creates an lreg object
@@ -40,8 +40,8 @@ lines(pred(lreg),col=2)
 plot(resid(lreg))
 ```
 <p align="center">
-    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png" height="300">
-   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png" height="300">
+    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png" height="400",width="300">
+   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png" height="400",width="300>
 </p> 
 
 
