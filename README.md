@@ -44,5 +44,5 @@ plot(resid(lreg))
    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png", width="400">
 </p> 
 
-
-
+## License
+LinReg is licensed under the GPLv2+
