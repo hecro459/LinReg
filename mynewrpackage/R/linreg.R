@@ -143,8 +143,11 @@ summary <- function(x){UseMethod("summary",x)}
 #' @export
 print.linreg <- function(x)
 {
-  cat(sprintf("linreg(formula = %s, data=iris)\n",(format(x$Formula))))
-  cat(sprintf("%s",format(names(x$Coefficients))))
+  printModel <- function(formula,coefficients){
+    cat(sprintf("linreg(formula = %s, data=iris)\n",(format(formula))))
+    cat(sprintf("%s",format(names(coefficients))))
+  }
+  printModel(x$Formula,x$Coefficients)
 }
 
 #' @export
