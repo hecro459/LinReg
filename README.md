@@ -1,7 +1,7 @@
 # Simple Linear Regression Package
 [![Build Status](https://travis-ci.org/hecro459/LinReg.svg?branch=master)](https://travis-ci.org/hecro459/LinReg)
 
-R package with a simple implementation of Linear Regression using S3 classes.
+R package with a simple implementation of Linear Regression (OLS or Bayesian) using S3 classes.
 The following functions are available:
 * **linreg**:  Fits a linear regression model and creates an lreg object
 * **print**:   Prints out the regression formula
@@ -30,13 +30,13 @@ The following functions are available:
 
 ## Example
 ```r
-data(iris)
-D = iris
-f <- Petal.Length~Species
-lreg <- linreg(D,f) 
-summary(lreg)
+y <- c(AirPassengers)
+D = data.frame(x=seq(1,length(y)),y=y)
+f <- y~x
+lreg <- linreg(D,f,0) #OLS Estimation
+plot(D$y)
+lines(pred(lreg),col=2)
 plot(resid(lreg))
-plot(pred(lreg))
 ```
 <p align="center">
    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png" width="400">
