@@ -41,8 +41,9 @@ linreg <- function(data,formula,type){
     #no prior for sigma so we approximate it from data
     sigma2 <- ((max(y)-min(y))/4)**2
     #non-informative prior
+    prior_variance = 1000
     mu0 <- numeric(m)
-    Sigma0 <- diag(m)*1000
+    Sigma0 <- diag(m)*prior_variance
     #calculation of posterior distribution
     SigmaStar <- sigma2*solve(sigma2*solve(Sigma0)+t(X)%*%X)
     muStar <- SigmaStar%*%solve(Sigma0)%*%mu0+1/sigma2*(SigmaStar%*%t(X)%*%y)
