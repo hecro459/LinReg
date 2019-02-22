@@ -46,9 +46,12 @@ test_that("resid() works", {
   expect_equal(round(unname(resid(linreg_mod2)[c(7,13,27)]),2), c(0.31, -0.58, -0.20))
 })
 
+#Testing that we get correct regression estimated coefficients
 test_that("coef() works", {
-  linreg_mod <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
-  expect_true(all(round(unname(coef(linreg_mod)),2) %in% c(-2.52, -1.34, 1.78)))
+  linreg_mod1 <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_true(all(round(unname(coef(linreg_mod1)),2) %in% c(-2.52, -1.34, 1.78)))
+  linreg_mod2 <- linreg_bayes(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_true(all(round(unname(coef(linreg_mod2)),2) %in% c(-2.52, -1.34, 1.78)))
 })
 
 
