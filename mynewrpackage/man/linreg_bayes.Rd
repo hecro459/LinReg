@@ -4,7 +4,7 @@
 \alias{linreg_bayes}
 \title{Basic Bayesian Linear Regression.}
 \usage{
-linreg_bayes(data, formula, type)
+linreg_bayes(data, formula)
 }
 \arguments{
 \item{data}{An input data frame}

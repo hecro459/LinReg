@@ -4,7 +4,7 @@
 \alias{linreg_ols}
 \title{Basic OLS Linear Regression.}
 \usage{
-linreg_ols(data, formula, type)
+linreg_ols(data, formula)
 }
 \arguments{
 \item{data}{An input data frame}
