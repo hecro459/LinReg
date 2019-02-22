@@ -1,6 +1,6 @@
-#' Basic OST Linear Regression.
+#' Basic OLS Linear Regression.
 #'
-#' \code{linreg_ost} returns a S3 object of class linreg
+#' \code{linreg_ols} returns a S3 object of class linreg
 #'
 #' This function performs a basic linear regression model and return an object
 #' for which a number of methods are defined to analyze the regression results.
@@ -13,7 +13,7 @@
 #'
 #' @seealso \url{https://en.wikipedia.org/wiki/Linear_regression}
 #' @import stats utils MASS
-linreg_ost <- function(data,formula,type){
+linreg_ols <- function(data,formula,type){
   X <- model.matrix(formula,data)
   y <- data[,all.vars(formula)[1]]
   n <- length(y)
