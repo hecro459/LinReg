@@ -39,14 +39,14 @@ linreg <- function(data,formula,type){
   else{
     rtype="bayes"
     #no prior for sigma so we approximate it from data
-    sigma2 <- ((max(y)-min(y))/4)**2
+    dataNoise <- ((max(y)-min(y))/4)**2
     #non-informative prior
     prior_variance = 1000
     mu0 <- numeric(m)
     Sigma0 <- diag(m)*prior_variance
     #calculation of posterior distribution
-    SigmaStar <- sigma2*solve(sigma2*solve(Sigma0)+t(X)%*%X)
-    muStar <- SigmaStar%*%solve(Sigma0)%*%mu0+1/sigma2*(SigmaStar%*%t(X)%*%y)
+    SigmaStar <- dataNoise*solve(dataNoise*solve(Sigma0)+t(X)%*%X)
+    muStar <- SigmaStar%*%solve(Sigma0)%*%mu0+1/dataNoise*(SigmaStar%*%t(X)%*%y)
     #take N samples from posterior and get betas 
     N_posterior_samples <- 10000
     Bsample <- mvrnorm(N_posterior_samples,muStar,SigmaStar)
@@ -54,7 +54,7 @@ linreg <- function(data,formula,type){
     yhat <- X%*%Bhat
     residuals <- y-yhat
     degreesFreedom <- nrow(X)-nrow(Bhat)#Does it make sense in Bayesian?
-    evar <- sigma2
+    evar <- dataNoise
     Bvar <- as.matrix(apply(Bsample,2,var))
     tvalues <- numeric(m)#No t-values
     pvalues <- numeric(m)#or p-values in Bayesian!
