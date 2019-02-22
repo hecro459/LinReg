@@ -13,7 +13,7 @@
 #'
 #' @seealso \url{https://en.wikipedia.org/wiki/Linear_regression}
 #' @import stats utils MASS
-linreg_ols <- function(data,formula,type){
+linreg_ols <- function(data,formula){
   X <- model.matrix(formula,data)
   y <- data[,all.vars(formula)[1]]
   n <- length(y)
@@ -59,7 +59,7 @@ linreg_ols <- function(data,formula,type){
 #'
 #' @seealso \url{https://en.wikipedia.org/wiki/Linear_regression}
 #' @import stats utils MASS
-linreg_bayes <- function(data,formula,type){
+linreg_bayes <- function(data,formula){
   X <- model.matrix(formula,data)
   y <- data[,all.vars(formula)[1]]
   n <- length(y)
