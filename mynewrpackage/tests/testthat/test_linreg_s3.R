@@ -1,14 +1,19 @@
 context("linreg")
-
 data("iris")
 
-test_that("lenreg rejects errounous input", {
+#Testing for errorneous input in linreg_ols function
+test_that("linreg_ols rejects errounous input", {
   expect_error(linreg_ols(Petal.Length~Sepdsal.Width+Sepal.Length, data=iris))
   expect_error(linreg_ols(Petal.Length~Sepdsal.Width+Sepal.Length, data=irfsfdis))
+  expect_error(linreg_ols("this is not a formula!", data=iris))
 })
 
-# linreg <- lm
-# 
+#Testing for errorneous input in linreg_bayes function
+test_that("linreg_bayes rejects errounous input", {
+  expect_error(linreg_ols(Petal.Length~Sepdsal.Width+Sepal.Length, data="nothing"))
+  expect_error(linreg_ols(Petal.Length~Sepdsal.Width+Sepal.Length, data=iris))
+  expect_error(linreg_ols("this is not a formula!", data=iris))
+})
 
 test_that("class is correct", {
   linreg_mod <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
