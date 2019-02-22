@@ -25,9 +25,9 @@ linreg <- function(data,formula,type){
     yhat <- X%*%Bhat
     #plot(y~X[,2])
     #lines(yhat~X[,2],col=2)
-    ehat <- y-yhat
+    residuals <- y-yhat
     df <- nrow(X)-nrow(Bhat)
-    evar <- (t(ehat)%*%ehat)/df
+    evar <- (t(residuals)%*%residuals)/df
     Bvar <- c(evar)*diag(solve(t(X)%*%X))
     tvalues <- Bhat/sqrt(Bvar)
     pvalues <- numeric(length(tvalues))
@@ -52,7 +52,7 @@ linreg <- function(data,formula,type){
     Bsample <- mvrnorm(N_posterior_samples,muStar,SigmaStar)
     Bhat <- as.matrix(apply(Bsample,2,mean))
     yhat <- X%*%Bhat
-    ehat <- y-yhat
+    residuals <- y-yhat
     df <- nrow(X)-nrow(Bhat)#Does it make sense in Bayesian?
     evar <- sigma2
     Bvar <- as.matrix(apply(Bsample,2,var))
@@ -62,8 +62,8 @@ linreg <- function(data,formula,type){
   #Prepare data for class output
   coeff <- c(Bhat)
   names(coeff) <- rownames(Bhat)
-  reg <- list(formula,coeff,yhat,ehat,Bvar,tvalues,pvalues,df,rtype)
-  names(reg) <- c("Formula","Coefficients","yhat","ehat","Bvar","tvalues","pvalues","df","rtype")
+  reg <- list(formula,coeff,yhat,residuals,Bvar,tvalues,pvalues,df,rtype)
+  names(reg) <- c("Formula","Coefficients","yhat","residuals","Bvar","tvalues","pvalues","df","rtype")
   class(reg) <- "linreg" 
   return(reg)
 }
@@ -156,26 +156,26 @@ print.linreg <- function(x)
 #' @import ggplot2 gridExtra 
 plot.linreg <- function(x){
   yhat <- x$yhat
-  ehat <- x$ehat
+  residuals <- x$residuals
   f <- x$Formula
-  outliers <- tail(order(abs(ehat)),3)
-  stand_ehat <- sqrt(abs((ehat-mean(ehat))/sd(ehat)))
+  outliers <- tail(order(abs(residuals)),3)
+  stand_ehat <- sqrt(abs((residuals-mean(residuals))/sd(residuals)))
   
   #Liu_theme
   #LiUtheme <- theme_classic() +  theme(plot.title = element_text(hjust = 0.5)) +
    # theme(panel.background = element_rect(fill = "lightblue",colour = "lightblue",size = 0.5, linetype = "solid"))
   
-  p1 <- ggplot(data=NULL,aes(x = yhat, y = ehat)) + 
+  p1 <- ggplot(data=NULL,aes(x = yhat, y = residuals)) + 
     geom_point() + 
     geom_smooth(method = "glm", se = FALSE, color = "red") +
     labs(title="Residuals vs Fitted",x=sprintf("Fitted_values\n %s",as.character(c(f))),y="Residuals") +
-    geom_text(label = outliers,aes(x=yhat[outliers]-0.1,y=ehat[outliers])) + 
+    geom_text(label = outliers,aes(x=yhat[outliers]-0.1,y=residuals[outliers])) + 
     #LiUtheme
     theme_classic() +
     theme(plot.title = element_text(hjust = 0.5)) 
   
   #Standardized residuals 
-  stand_ehat <- sqrt(abs((ehat-mean(ehat))/sd(ehat)))
+  stand_ehat <- sqrt(abs((residuals-mean(residuals))/sd(residuals)))
   p2 <- ggplot(data=NULL,aes(x = yhat, y = stand_ehat)) + 
     geom_point() + 
     #geom_smooth(method = "lm", formula=stand_ehat~poly(yhat,6,raw=T),se = FALSE, color = "red") +
@@ -190,7 +190,7 @@ plot.linreg <- function(x){
 
 #' @export
 resid.linreg <- function(x){
-  return(x$ehat)
+  return(x$residuals)
 }
 
 #' @export
@@ -212,7 +212,7 @@ summary.linreg <- function(x){
       cat(sprintf("%-15s\t\t%6.6f\t%6.6f\t%6.6f\n",strtrim(names(coeff[i]),15),Bvar[i],tvalues[i],pvalues[i]))
     }
     cat(sprintf("--------------------------------------------------------------\n"))
-    cat(sprintf("Estimated error variance: %f\n",var(x$ehat)))
+    cat(sprintf("Estimated error variance: %f\n",var(x$residuals)))
     cat(sprintf("Degrees of freedom: %d\n",x$df))
   }
   
