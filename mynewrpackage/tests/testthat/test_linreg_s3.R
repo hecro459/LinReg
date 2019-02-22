@@ -15,9 +15,12 @@ test_that("linreg_bayes rejects errounous input", {
   expect_error(linreg_ols("this is not a formula!", data=iris))
 })
 
+#Testing that the returned object is from the correct class
 test_that("class is correct", {
-  linreg_mod <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
-  expect_s3_class(linreg_mod, "linreg")
+  linreg_mod1 <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_s3_class(linreg_mod1, "linreg")
+  linreg_mod2 <- linreg_bayes(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_s3_class(linreg_mod2, "linreg")
 })
 
 #test_that("print() works", {
