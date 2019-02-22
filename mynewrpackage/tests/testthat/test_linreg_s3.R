@@ -3,16 +3,15 @@ context("linreg")
 data("iris")
 
 test_that("lenreg rejects errounous input", {
-  expect_error(linreg(Petal.Length~Sepdsal.Width+Sepal.Length, data=iris,type=0))
-  expect_error(linreg(Petal.Length~Sepdsal.Width+Sepal.Length, data=irfsfdis,type=0))
+  expect_error(linreg_ols(Petal.Length~Sepdsal.Width+Sepal.Length, data=iris,type=0))
+  expect_error(linreg_ols(Petal.Length~Sepdsal.Width+Sepal.Length, data=irfsfdis,type=0))
 })
 
 # linreg <- lm
 # 
 
 test_that("class is correct", {
-  linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris,type=0)
-  
+  linreg_mod <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris,type=0)
   expect_s3_class(linreg_mod, "linreg")
 })
 
@@ -24,20 +23,18 @@ test_that("class is correct", {
 #})
 
 test_that("pred() works", {
-  linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris,type=0)
-
+  linreg_mod <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris,type=0)
   expect_equal(round(unname(pred(linreg_mod)[c(1,5,7)]),2), c(1.85, 1.53, 1.09))    
 })
 
 test_that("resid() works", {
-  linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris,type=0)
+  linreg_mod <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris,type=0)
   
   expect_equal(round(unname(resid(linreg_mod)[c(7,13,27)]),2), c(0.31, -0.58, -0.20))
 })
 
 test_that("coef() works", {
-  linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris,type=0)
-
+  linreg_mod <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris,type=0)
   expect_true(all(round(unname(coef(linreg_mod)),2) %in% c(-2.52, -1.34, 1.78)))
 })
 
