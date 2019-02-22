@@ -4,7 +4,8 @@
 R package with a simple implementation of Linear Regression using S3 classes. Ordinary Least-Squares and Bayesian estimation with non-informative prior are supported. 
 
 The following functions are available:
-* **linreg**:  Fits a linear regression model and creates an lreg object
+* **linreg_ols**:  Fits a linear regression model using OLS and creates an lreg object
+* **linreg_bayes**:  Fits a linear regression model using Bayesian estimation and creates an lreg object
 * **print**:   Prints out the regression formula
 * **coef**:    Returns the estimated coefficients
 * **resid**:   Returns the residuals
@@ -43,6 +44,23 @@ plot(resid(lreg))
     <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png", width="400">
    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png", width="400">
 </p> 
+
+## Testing
+
+Testing was automated using <https://github.com/r-lib/testthat>. 
+The specific R script with the tests is /mynewrpackage/tests/testthat/test_linreg_s3.R. 
+Instructions for testing the package on RStudio:
+
+1. Open RStudio and load the correspoing project.
+2. Build the package: *Build* -> *Clean and Rebuild*.
+3. Test the package: *Build* -> *Test Package*. If everything went fine, you should get an output like this in the right panel of RStudio:
+
+<p align="left">
+   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/test.png" width="400">
+
+
+
+
 
 ## License
 LinReg is licensed under the GPLv2+
