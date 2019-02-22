@@ -76,7 +76,7 @@ linreg_bayes <- function(data,formula){
   SigmaStar <- dataNoise*solve(dataNoise*solve(Sigma0)+t(X)%*%X)
   muStar <- SigmaStar%*%solve(Sigma0)%*%mu0+1/dataNoise*(SigmaStar%*%t(X)%*%y)
   #take N samples from posterior and get betas 
-  N_posterior_samples <- 10000
+  N_posterior_samples <- 1000000
   Bsample <- mvrnorm(N_posterior_samples,muStar,SigmaStar)
   Bhat <- as.matrix(apply(Bsample,2,mean))
   yhat <- X%*%Bhat
