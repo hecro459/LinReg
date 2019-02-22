@@ -46,13 +46,11 @@ plot(resid(lreg))
 </p> 
 
 ## Testing
-
 Testing was automated using <https://github.com/r-lib/testthat>. 
 The specific R script with the tests is /mynewrpackage/tests/testthat/test_linreg_s3.R. 
 Instructions for testing the package on RStudio:
-
-1. Open RStudio and load the correspoing project.
-2. Build the package: *Build* -> *Clean and Rebuild*.
+1. Open RStudio and load the correspoing project
+2. Build the package: *Build* -> *Clean and Rebuild*
 3. Test the package: *Build* -> *Test Package*. If everything went fine, you should get an output like this in the right panel of RStudio:
 
 <p align="left">
