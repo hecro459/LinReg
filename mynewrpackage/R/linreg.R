@@ -26,14 +26,14 @@ linreg <- function(data,formula,type){
     #plot(y~X[,2])
     #lines(yhat~X[,2],col=2)
     residuals <- y-yhat
-    df <- nrow(X)-nrow(Bhat)
-    evar <- (t(residuals)%*%residuals)/df
+    degreesFreedom <- nrow(X)-nrow(Bhat)
+    evar <- (t(residuals)%*%residuals)/degreesFreedom
     Bvar <- c(evar)*diag(solve(t(X)%*%X))
     tvalues <- Bhat/sqrt(Bvar)
     pvalues <- numeric(length(tvalues))
     for (i in 1:length(pvalues)){
-      if (tvalues[i]<0) pvalues[i] <- 2*pt(tvalues[i],df)
-      else pvalues[i] <- pvalues[i] <- 2*pt(-tvalues[i],df)
+      if (tvalues[i]<0) pvalues[i] <- 2*pt(tvalues[i],degreesFreedom)
+      else pvalues[i] <- pvalues[i] <- 2*pt(-tvalues[i],degreesFreedom)
     }
   }
   else{
@@ -53,7 +53,7 @@ linreg <- function(data,formula,type){
     Bhat <- as.matrix(apply(Bsample,2,mean))
     yhat <- X%*%Bhat
     residuals <- y-yhat
-    df <- nrow(X)-nrow(Bhat)#Does it make sense in Bayesian?
+    degreesFreedom <- nrow(X)-nrow(Bhat)#Does it make sense in Bayesian?
     evar <- sigma2
     Bvar <- as.matrix(apply(Bsample,2,var))
     tvalues <- numeric(m)#No t-values
@@ -62,8 +62,8 @@ linreg <- function(data,formula,type){
   #Prepare data for class output
   coeff <- c(Bhat)
   names(coeff) <- rownames(Bhat)
-  reg <- list(formula,coeff,yhat,residuals,Bvar,tvalues,pvalues,df,rtype)
-  names(reg) <- c("Formula","Coefficients","yhat","residuals","Bvar","tvalues","pvalues","df","rtype")
+  reg <- list(formula,coeff,yhat,residuals,Bvar,tvalues,pvalues,degreesFreedom,rtype)
+  names(reg) <- c("Formula","Coefficients","yhat","residuals","Bvar","tvalues","pvalues","degreesFreedom","rtype")
   class(reg) <- "linreg" 
   return(reg)
 }
@@ -213,7 +213,7 @@ summary.linreg <- function(x){
     }
     cat(sprintf("--------------------------------------------------------------\n"))
     cat(sprintf("Estimated error variance: %f\n",var(x$residuals)))
-    cat(sprintf("Degrees of freedom: %d\n",x$df))
+    cat(sprintf("Degrees of freedom: %d\n",x$degreesFreedom))
   }
   
   n <- length(x$Coefficients)
