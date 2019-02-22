@@ -1,64 +1,92 @@
-#' Basic Linear Regression.
+#' Basic OST Linear Regression.
 #'
-#' \code{linreg} returns a S3 object of class linreg
+#' \code{linreg_ost} returns a S3 object of class linreg
 #'
 #' This function performs a basic linear regression model and return an object
 #' for which a number of methods are defined to analyze the regression results.
+#' Estimation is done using Ordinary-Least-Squares method.
 #'
 #' @export
 #' @param formula A formula object contanining the model.
 #' @param data An input data frame
-#' @param type An integer defining the regression type: 0=OLS, 1=Bayesian.
 #' @return An S3 object of class linreg 
 #'
 #' @seealso \url{https://en.wikipedia.org/wiki/Linear_regression}
 #' @import stats utils MASS
-linreg <- function(data,formula,type){
+linreg_ost <- function(data,formula,type){
   X <- model.matrix(formula,data)
   y <- data[,all.vars(formula)[1]]
   n <- length(y)
   m <- ncol(X)
   
-  if(type==0){
-    rtype="freq"
-    Bhat <- solve(t(X)%*%X)%*%t(X)%*%y
-    yhat <- X%*%Bhat
-    #plot(y~X[,2])
-    #lines(yhat~X[,2],col=2)
-    residuals <- y-yhat
-    degreesFreedom <- nrow(X)-nrow(Bhat)
-    evar <- (t(residuals)%*%residuals)/degreesFreedom
-    Bvar <- c(evar)*diag(solve(t(X)%*%X))
-    tvalues <- Bhat/sqrt(Bvar)
-    pvalues <- numeric(length(tvalues))
-    for (i in 1:length(pvalues)){
-      if (tvalues[i]<0) pvalues[i] <- 2*pt(tvalues[i],degreesFreedom)
-      else pvalues[i] <- pvalues[i] <- 2*pt(-tvalues[i],degreesFreedom)
-    }
+  rtype="freq"
+  Bhat <- solve(t(X)%*%X)%*%t(X)%*%y
+  yhat <- X%*%Bhat
+  #plot(y~X[,2])
+  #lines(yhat~X[,2],col=2)
+  residuals <- y-yhat
+  degreesFreedom <- nrow(X)-nrow(Bhat)
+  evar <- (t(residuals)%*%residuals)/degreesFreedom
+  Bvar <- c(evar)*diag(solve(t(X)%*%X))
+  tvalues <- Bhat/sqrt(Bvar)
+  pvalues <- numeric(length(tvalues))
+  for (i in 1:length(pvalues)){
+    if (tvalues[i]<0) pvalues[i] <- 2*pt(tvalues[i],degreesFreedom)
+    else pvalues[i] <- pvalues[i] <- 2*pt(-tvalues[i],degreesFreedom)
   }
-  else{
-    rtype="bayes"
-    #no prior for sigma so we approximate it from data
-    dataNoise <- ((max(y)-min(y))/4)**2
-    #non-informative prior
-    prior_variance = 1000
-    mu0 <- numeric(m)
-    Sigma0 <- diag(m)*prior_variance
-    #calculation of posterior distribution
-    SigmaStar <- dataNoise*solve(dataNoise*solve(Sigma0)+t(X)%*%X)
-    muStar <- SigmaStar%*%solve(Sigma0)%*%mu0+1/dataNoise*(SigmaStar%*%t(X)%*%y)
-    #take N samples from posterior and get betas 
-    N_posterior_samples <- 10000
-    Bsample <- mvrnorm(N_posterior_samples,muStar,SigmaStar)
-    Bhat <- as.matrix(apply(Bsample,2,mean))
-    yhat <- X%*%Bhat
-    residuals <- y-yhat
-    degreesFreedom <- nrow(X)-nrow(Bhat)#Does it make sense in Bayesian?
-    evar <- dataNoise
-    Bvar <- as.matrix(apply(Bsample,2,var))
-    tvalues <- numeric(m)#No t-values
-    pvalues <- numeric(m)#or p-values in Bayesian!
-  }
+  
+  #Prepare data for class output
+  coeff <- c(Bhat)
+  names(coeff) <- rownames(Bhat)
+  reg <- list(formula,coeff,yhat,residuals,Bvar,tvalues,pvalues,degreesFreedom,rtype)
+  names(reg) <- c("Formula","Coefficients","yhat","residuals","Bvar","tvalues","pvalues","degreesFreedom","rtype")
+  class(reg) <- "linreg" 
+  return(reg)
+}
+
+#' Basic Bayesian Linear Regression.
+#'
+#' \code{linreg_bayes} returns a S3 object of class linreg
+#'
+#' This function performs a basic linear regression model and return an object
+#' for which a number of methods are defined to analyze the regression results.
+#' Estimation is done using Bayesian inference with a flat multivariate normal prior.
+#'
+#' @export
+#' @param formula A formula object contanining the model.
+#' @param data An input data frame
+#' @return An S3 object of class linreg 
+#'
+#' @seealso \url{https://en.wikipedia.org/wiki/Linear_regression}
+#' @import stats utils MASS
+linreg_bayes <- function(data,formula,type){
+  X <- model.matrix(formula,data)
+  y <- data[,all.vars(formula)[1]]
+  n <- length(y)
+  m <- ncol(X)
+  
+  rtype="bayes"
+  #no prior for sigma so we approximate it from data
+  dataNoise <- ((max(y)-min(y))/4)**2
+  #non-informative prior
+  prior_variance = 1000
+  mu0 <- numeric(m)
+  Sigma0 <- diag(m)*prior_variance
+  #calculation of posterior distribution
+  SigmaStar <- dataNoise*solve(dataNoise*solve(Sigma0)+t(X)%*%X)
+  muStar <- SigmaStar%*%solve(Sigma0)%*%mu0+1/dataNoise*(SigmaStar%*%t(X)%*%y)
+  #take N samples from posterior and get betas 
+  N_posterior_samples <- 10000
+  Bsample <- mvrnorm(N_posterior_samples,muStar,SigmaStar)
+  Bhat <- as.matrix(apply(Bsample,2,mean))
+  yhat <- X%*%Bhat
+  residuals <- y-yhat
+  degreesFreedom <- nrow(X)-nrow(Bhat)#Does it make sense in Bayesian?
+  evar <- dataNoise
+  Bvar <- as.matrix(apply(Bsample,2,var))
+  tvalues <- numeric(m)#No t-values
+  pvalues <- numeric(m)#or p-values in Bayesian!
+
   #Prepare data for class output
   coeff <- c(Bhat)
   names(coeff) <- rownames(Bhat)
