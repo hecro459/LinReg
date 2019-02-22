@@ -167,19 +167,9 @@ plot.linreg <- function(x){
     return(plot)
   }
   
-  yhat <- x$yhat
-  residuals <- x$residuals
-  f <- x$Formula
-  outliers <- tail(order(abs(residuals)),3)
-  stand_ehat <- sqrt(abs((residuals-mean(residuals))/sd(residuals)))
-  
-  #Liu_theme
-  #LiUtheme <- theme_classic() +  theme(plot.title = element_text(hjust = 0.5)) +
-   # theme(panel.background = element_rect(fill = "lightblue",colour = "lightblue",size = 0.5, linetype = "solid"))
-  
-  #Standardized residuals 
-  stand_ehat <- sqrt(abs((residuals-mean(residuals))/sd(residuals)))
-  p2 <- ggplot(data=NULL,aes(x = yhat, y = stand_ehat)) + 
+  scaleLocationPlot <- function(yhat,residuals,f,outliers,stand_ehat){
+    stand_ehat <- sqrt(abs((residuals-mean(residuals))/sd(residuals)))
+    plot <- ggplot(data=NULL,aes(x = yhat, y = stand_ehat)) + 
     geom_point() + 
     #geom_smooth(method = "lm", formula=stand_ehat~poly(yhat,6,raw=T),se = FALSE, color = "red") +
     geom_smooth(method = "glm", se = FALSE, color = "red") +
@@ -188,8 +178,17 @@ plot.linreg <- function(x){
     #+ LiUtheme
     theme_classic() + 
     theme(plot.title = element_text(hjust = 0.5)) 
+    return(plot)
+  }
+  
+  yhat <- x$yhat
+  residuals <- x$residuals
+  f <- x$Formula
+  outliers <- tail(order(abs(residuals)),3)
+  stand_ehat <- sqrt(abs((residuals-mean(residuals))/sd(residuals)))
   
   p1 <- residualVsFittedPlot(yhat,residuals,f,outliers,stand_ehat)
+  p2 <- scaleLocationPlot(yhat,residuals,f,outliers,stand_ehat)
   grid.arrange(p1, p2, ncol=2)
 }
 
