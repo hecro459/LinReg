@@ -38,10 +38,12 @@ test_that("pred() works", {
   expect_equal(round(unname(pred(linreg_mod2)[c(1,5,7)]),2), c(1.85, 1.53, 1.09))    
 })
 
+#Testing that the residuals from regression are correct
 test_that("resid() works", {
-  linreg_mod <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
-  
-  expect_equal(round(unname(resid(linreg_mod)[c(7,13,27)]),2), c(0.31, -0.58, -0.20))
+  linreg_mod1 <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_equal(round(unname(resid(linreg_mod1)[c(7,13,27)]),2), c(0.31, -0.58, -0.20))
+  linreg_mod2 <- linreg_bayes(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_equal(round(unname(resid(linreg_mod2)[c(7,13,27)]),2), c(0.31, -0.58, -0.20))
 })
 
 test_that("coef() works", {
