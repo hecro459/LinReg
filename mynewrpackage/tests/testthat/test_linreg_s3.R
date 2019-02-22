@@ -30,9 +30,12 @@ test_that("class is correct", {
   #expect_output(print(linreg_mod)," \\(Intercept\\)   Sepal\\.Width  Sepal\\.Length")
 #})
 
+#Testing that the fitted values from regression are correct
 test_that("pred() works", {
-  linreg_mod <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
-  expect_equal(round(unname(pred(linreg_mod)[c(1,5,7)]),2), c(1.85, 1.53, 1.09))    
+  linreg_mod1 <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_equal(round(unname(pred(linreg_mod1)[c(1,5,7)]),2), c(1.85, 1.53, 1.09))
+  linreg_mod2 <- linreg_bayes(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_equal(round(unname(pred(linreg_mod2)[c(1,5,7)]),2), c(1.85, 1.53, 1.09))    
 })
 
 test_that("resid() works", {
