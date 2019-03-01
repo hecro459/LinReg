@@ -36,10 +36,10 @@ The following functions are available:
 y <- c(AirPassengers)
 D = data.frame(x=seq(1,length(y)),y=y)
 f <- y~x
-lreg <- linreg(D,f,0) #OLS Estimation
-plot(D$y)
+lreg <- linreg_ols(D,f) #OLS Estimation
+plot(D$y,xlab="Time",ylab="PAX (000s)",type="l")
 lines(pred(lreg),col=2)
-plot(resid(lreg))
+plot(resid(lreg),xlab="Time",ylab="Residuals")
 ```
 <p align="center">
     <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png", width="400">
