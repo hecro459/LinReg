@@ -1,6 +1,6 @@
 # Simple Linear Regression Package
 [![Build Status](https://travis-ci.org/hecro459/LinReg.svg?branch=master)](https://travis-ci.org/hecro459/LinReg)
-[![codecov](https://codecov.io/gh/hecro459/LinReg)](https://codecov.io/gh/hecro459/LinReg) 
+[![codecov](https://codecov.io/gh/hecro459/LinReg/branch/master/graph/badge.svg)](https://codecov.io/gh/hecro459/LinReg) 
 
 R package with a simple implementation of Linear Regression using S3 classes. Ordinary Least-Squares and Bayesian estimation with non-informative prior are supported. 
 
