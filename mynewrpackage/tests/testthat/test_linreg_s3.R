@@ -23,13 +23,6 @@ test_that("class is correct", {
   expect_s3_class(linreg_mod2, "linreg")
 })
 
-#test_that("print() works", {
-#  linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
-
-  #expect_output(print(linreg_mod),"linreg\\(formula = Petal\\.Length ~ Sepal\\.Width \\+ Sepal\\.Length, data = iris\\)")
-  #expect_output(print(linreg_mod)," \\(Intercept\\)   Sepal\\.Width  Sepal\\.Length")
-#})
-
 #Testing that the fitted values from regression are correct
 test_that("pred() works", {
   linreg_mod1 <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
@@ -54,13 +47,25 @@ test_that("coef() works", {
   expect_true(all(round(unname(coef(linreg_mod2)),2) %in% c(-2.52, -1.34, 1.78)))
 })
 
+#Testing that the output for the summary function is correct
+test_that("summary() works", {
+  linreg_mod1 <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_output(summary(linreg_mod1), ".*\\(Intercept\\).*0.31.*-4.48.*0.00.*")
+  expect_output(summary(linreg_mod1), ".*Sepal.Width.*0.014.*-10.94.*0.00.*")
+  expect_output(summary(linreg_mod1), ".*Sepal.Length.*0.004.*27.56.*0.00.*")
+  linreg_mod2 <- linreg_bayes(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_output(summary(linreg_mod2), ".*\\(Intercept\\).*1.6.*0.0.*0.00.*")
+  expect_output(summary(linreg_mod2), ".*Sepal.Width.*0.07.*0.00.*0.00.*")
+  expect_output(summary(linreg_mod2), ".*Sepal.Length.*0.02.*0.00.*0.00.*")
+})
 
-#test_that("summary() works", {
+#test_that("print() works", {
 #  linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
-#  
-#  expect_output(summary(linreg_mod), "\\(Intercept\\)( )*-2.5[0-9]*( )*0.5[0-9]*( )*-4.4[0-9]*( )*.*( )*\\*\\*\\*")  
-#  expect_output(summary(linreg_mod), "Sepal.Width( )*-1.3[0-9]*( )*0.1[0-9]*( )*-10.9[0-9]*( )*.*( )*\\*\\*\\*")
-#  expect_output(summary(linreg_mod), "Sepal.Length( )*1.7[0-9]*( )*0.0[0-9]*( )*27.5[0-9]*( )*.*( )*\\*\\*\\*")
-#  expect_output(summary(linreg_mod), "Residual standard error: 0.6[0-9]* on 147 degrees of freedom")
+
+#expect_output(print(linreg_mod),"linreg\\(formula = Petal\\.Length ~ Sepal\\.Width \\+ Sepal\\.Length, data = iris\\)")
+#expect_output(print(linreg_mod)," \\(Intercept\\)   Sepal\\.Width  Sepal\\.Length")
 #})
+
+
+
 
