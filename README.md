@@ -42,8 +42,8 @@ lines(pred(lreg),col=2)
 plot(resid(lreg),xlab="Time",ylab="Residuals")
 ```
 <p align="center">
-    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png", width="400">
-   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png", width="400">
+    <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/predplot.png", width="400", heigth="300">
+   <img src="https://raw.githubusercontent.com/hecro459/LinReg/master/resplot.png", width="400", heigth="300">
 </p> 
 
 ## Testing
