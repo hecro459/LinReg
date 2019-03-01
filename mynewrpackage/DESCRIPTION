@@ -11,5 +11,5 @@ RoxygenNote: 6.0.1
 Imports: ggplot2, gridExtra, MASS
 Suggests: testthat,
     knitr,
-    rmarkdown
+    rmarkdown, covr
 VignetteBuilder: knitr
