@@ -69,6 +69,14 @@ expect_output(print(linreg_mod2),"linreg\\(formula = Petal\\.Length ~ Sepal\\.Wi
 expect_output(print(linreg_mod2),"\\(Intercept)  Sepal\\.Width  Sepal\\.Length")
 })
 
+#Testing that the plot function actually returns a plot
+test_that("plot() works",{
+  linreg_mod1 <- linreg_ols(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_is(plot(linreg_mod1),"gtable")
+  linreg_mod2 <- linreg_bayes(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  expect_is(plot(linreg_mod2),"gtable")
+})
+
 
 
 
