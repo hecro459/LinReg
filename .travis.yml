@@ -1,3 +1,9 @@
 language: r
 before_install:
   - cd mynewrpackage
+  
+r_github_packages:
+  - r-lib/covr
+
+after_success:
+  - Rscript -e 'covr::codecov()'
